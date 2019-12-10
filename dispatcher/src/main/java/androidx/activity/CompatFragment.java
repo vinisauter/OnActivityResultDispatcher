@@ -9,10 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 @SuppressLint("Registered")
-public class CompatActivity extends AppCompatActivity implements OnActivityResultDispatcherOwner {
+public class CompatFragment extends Fragment implements OnActivityResultDispatcherOwner {
     private final OnActivityResultDispatcher mOnActivityResultDispatcher = new OnActivityResultDispatcher(this);
 
     /**
@@ -27,15 +27,9 @@ public class CompatActivity extends AppCompatActivity implements OnActivityResul
         return mOnActivityResultDispatcher;
     }
 
-    @NonNull
-    @Override
-    public CompatActivity getActivity() {
-        return this;
-    }
-
     @Override
     @CallSuper
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         mOnActivityResultDispatcher.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
